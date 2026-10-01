@@ -50,5 +50,7 @@ npm run test:report
 
 Un tableau récapitulatif complémentaire est généré dans
 `playwright-report/tableau-tests.html`. Il présente, pour chaque test, sa fonction,
-son scénario Gherkin, les valeurs attendue et obtenue, le statut de validation et
-les éventuelles remarques.
+son scénario Gherkin, les valeurs attendue et obtenue, le jeu de données utilisé,
+la preuve de test, le statut de validation et les éventuelles remarques. Les jeux
+de données peuvent être renseignés avec l’annotation `dataset` ; les pièces jointes
+du résultat Playwright sont proposées comme preuves lorsqu’elles sont disponibles.
