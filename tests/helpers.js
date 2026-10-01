@@ -45,12 +45,15 @@ async function ouvrirApplication(page) {
   await page.getByRole('button', { name: 'Se connecter' }).click();
 }
 
-function scenario(gherkin, expected) {
+function scenario(gherkin, expected, dataset = '') {
+  const annotation = [
+    { type: 'gherkin', description: gherkin },
+    { type: 'expected', description: expected },
+  ];
+  if (dataset) annotation.push({ type: 'dataset', description: dataset });
+
   return {
-    annotation: [
-      { type: 'gherkin', description: gherkin },
-      { type: 'expected', description: expected },
-    ],
+    annotation,
   };
 }
 

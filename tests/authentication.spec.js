@@ -5,7 +5,8 @@ const { ouvrirApplication, scenario } = require('./helpers');
 test.describe('Authentification', () => {
   test('demande le mot de passe avant d’afficher l’application', scenario(
     'Étant donné que je suis sur la page d’accueil\nAlors le formulaire de connexion est affiché et l’application reste masquée',
-    'Le formulaire de connexion est visible et la liste des utilisateurs est masquée'
+    'Le formulaire de connexion est visible et la liste des utilisateurs est masquée',
+    'Page d’accueil, sans utilisateur connecté'
   ), async ({ page }) => {
     await page.goto('.');
 
@@ -16,7 +17,8 @@ test.describe('Authentification', () => {
 
   test('refuse un mot de passe incorrect', scenario(
     'Étant donné que je suis sur la page de connexion\nQuand je saisis un mot de passe incorrect\nAlors un message d’erreur est affiché et l’application reste masquée',
-    'Le message « Mot de passe incorrect. » apparaît et le champ est vidé'
+    'Le message « Mot de passe incorrect. » apparaît et le champ est vidé',
+    'Mot de passe incorrect saisi par le test'
   ), async ({ page }) => {
     await page.goto('.');
     await page.getByLabel('Mot de passe').fill('incorrect');
@@ -29,7 +31,8 @@ test.describe('Authentification', () => {
 
   test('ouvre l’application avec le mot de passe configuré', scenario(
     'Étant donné que je suis sur la page de connexion\nQuand je saisis le mot de passe configuré\nAlors la liste des utilisateurs s’affiche',
-    'Le titre « Les utilisateurs » est visible'
+    'Le titre « Les utilisateurs » est visible',
+    'Mot de passe configuré et utilisateurs de démonstration'
   ), async ({ page }) => {
     await ouvrirApplication(page);
 
