@@ -14,6 +14,16 @@ function annotation(test, type) {
   return test.annotations.find((item) => item.type === type)?.description || '';
 }
 
+function proofLinks(attachments, reportDirectory) {
+  return attachments.map((attachment) => {
+    const name = escapeHtml(attachment.name);
+    if (!attachment.path) return name;
+
+    const relativePath = path.relative(reportDirectory, attachment.path).split(path.sep).join('/');
+    return `<a href="${escapeHtml(encodeURI(relativePath))}">${name}</a>`;
+  }).join('<br>');
+}
+
 class ReportTableReporter {
   onEnd(result) {
     const reportDirectory = path.resolve('playwright-report');
@@ -29,13 +39,19 @@ class ReportTableReporter {
       const remarks = finalResult?.error?.message || (
         finalResult?.status === 'skipped' ? 'Test ignoré.' : ''
       );
+      const attachments = finalResult?.attachments || [];
+      const proof = proofLinks(attachments, reportDirectory) || (
+        passed ? 'Assertions Playwright validées' : 'Résultat consigné par Playwright'
+      );
 
       return `<tr>
         <td>${escapeHtml(functionName.join(' › '))}</td>
         <td>${escapeHtml(test.title)}</td>
         <td>${escapeHtml(annotation(test, 'gherkin')).replaceAll('\n', '<br>')}</td>
         <td>${escapeHtml(annotation(test, 'expected'))}</td>
+        <td>${escapeHtml(annotation(test, 'dataset') || 'Non renseigné')}</td>
         <td>${escapeHtml(passed ? 'Résultat conforme aux assertions' : remarks || 'Test non exécuté')}</td>
+        <td>${proof}</td>
         <td class="${passed ? 'ok' : 'ko'}">${passed ? 'OK' : 'KO'}</td>
         <td>${escapeHtml(remarks)}</td>
       </tr>`;
@@ -51,7 +67,7 @@ class ReportTableReporter {
     body { font: 14px/1.5 system-ui, sans-serif; margin: 2rem; color: #24292f; }
     h1 { font-size: 1.5rem; }
     .table-wrapper { overflow-x: auto; }
-    table { border-collapse: collapse; min-width: 1000px; width: 100%; }
+    table { border-collapse: collapse; min-width: 1400px; width: 100%; }
     th, td { border: 1px solid #d0d7de; padding: .6rem; text-align: left; vertical-align: top; }
     th { background: #f6f8fa; }
     .ok { color: #1a7f37; font-weight: 700; }
@@ -65,7 +81,8 @@ class ReportTableReporter {
     <table>
       <thead><tr>
         <th>Fonction</th><th>Test</th><th>Gherkin</th><th>Valeur attendue</th>
-        <th>valeur obtenue</th><th>Validation OK,KO</th><th>Remarques</th>
+        <th>jeu de données utilisé</th><th>valeur obtenue</th><th>preuve de test</th>
+        <th>Validation OK,KO</th><th>Remarques</th>
       </tr></thead>
       <tbody>${rows.join('\n')}</tbody>
     </table>
