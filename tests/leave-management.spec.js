@@ -21,7 +21,7 @@ async function selectionnerPeriodeDUnJour(page, weeksAhead) {
 
 test.describe('Gestion des congés', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await page.locator('.user-card', { hasText: UTILISATEURS_SEED[2].nom }).click();
   });
 

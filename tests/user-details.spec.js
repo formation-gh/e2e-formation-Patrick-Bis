@@ -4,7 +4,7 @@ const { UTILISATEURS_SEED } = require('./helpers');
 
 test.describe('Fiche utilisateur', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await page.locator('.user-card', { hasText: UTILISATEURS_SEED[0].nom }).click();
   });
 
