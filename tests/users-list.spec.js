@@ -4,7 +4,7 @@ const { UTILISATEURS_SEED } = require('./helpers');
 
 test.describe('Liste des utilisateurs', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('.');
   });
 
   test("affiche le titre de l'écran d'accueil", async ({ page }) => {
