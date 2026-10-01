@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const { UTILISATEURS_SEED } = require('./helpers');
+const { auFormatISO, prochainLundi, UTILISATEURS_SEED } = require('./helpers');
 
 test.describe('Fiche utilisateur', () => {
   test.beforeEach(async ({ page }) => {
@@ -24,7 +24,15 @@ test.describe('Fiche utilisateur', () => {
     await expect(page.getByRole('heading', { name: 'Les utilisateurs' })).toBeVisible();
   });
 
-  test('le bouton "Poser le congé" est désactivé sans période sélectionnée valide', async ({ page }) => {
+  test('le bouton "Poser le congé" est désactivé sans jour ouvré sélectionné', async ({ page }) => {
+    const samedi = prochainLundi(new Date());
+    samedi.setDate(samedi.getDate() + 5);
+    const date = auFormatISO(samedi);
+    const champDateDebut = page.locator('.leave-form label', { hasText: 'Date de début' }).locator('input');
+    const champDateFin = page.locator('.leave-form label', { hasText: 'Date de fin' }).locator('input');
+    await champDateDebut.fill(date);
+    await champDateFin.fill(date);
+
     const bouton = page.getByRole('button', { name: 'Poser le congé' });
     await expect(bouton).toBeDisabled();
     await expect(page.locator('.form-hint')).toContainText(
