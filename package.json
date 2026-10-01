@@ -1,0 +1,22 @@
+{
+  "name": "e2e-formation-patrick-bis",
+  "version": "1.0.0",
+  "description": "nouveau repertoir pour avoir la première branche",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/formation-gh/e2e-formation-Patrick-Bis"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}
