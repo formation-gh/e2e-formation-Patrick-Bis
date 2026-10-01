@@ -47,3 +47,8 @@ Le rapport HTML peut ensuite être consulté avec :
 ```bash
 npm run test:report
 ```
+
+Un tableau récapitulatif complémentaire est généré dans
+`playwright-report/tableau-tests.html`. Il présente, pour chaque test, sa fonction,
+son scénario Gherkin, les valeurs attendue et obtenue, le statut de validation et
+les éventuelles remarques.
