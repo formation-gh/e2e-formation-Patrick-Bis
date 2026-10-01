@@ -29,6 +29,15 @@ npx playwright install --with-deps chromium
 
 ### Lancer les tests
 
+L’écran de connexion apparaît dès l’ouverture de l’application, avant la liste des
+utilisateurs. Les tests saisissent le mot de passe automatiquement à ce moment-là,
+avant chaque scénario. Vous pouvez fournir une valeur différente de celle de
+démonstration de l’application avec la variable `PLAYWRIGHT_APP_PASSWORD` :
+
+```bash
+PLAYWRIGHT_APP_PASSWORD="votre-mot-de-passe" npm test
+```
+
 ```bash
 npm test
 ```

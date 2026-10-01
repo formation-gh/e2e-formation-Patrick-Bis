@@ -1,10 +1,10 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const { auFormatISO, prochainLundi, UTILISATEURS_SEED } = require('./helpers');
+const { auFormatISO, ouvrirApplication, prochainLundi, UTILISATEURS_SEED } = require('./helpers');
 
 test.describe('Fiche utilisateur', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('.');
+    await ouvrirApplication(page);
     await page.locator('.user-card', { hasText: UTILISATEURS_SEED[0].nom }).click();
   });
 

@@ -35,4 +35,14 @@ const UTILISATEURS_SEED = [
   { nom: 'Luc Bernard', email: 'luc.bernard@formation.local' },
 ];
 
-module.exports = { prochainLundi, auFormatISO, UTILISATEURS_SEED };
+/**
+ * Ouvre l'application et franchit l'écran d'authentification.
+ * @param {import('@playwright/test').Page} page
+ */
+async function ouvrirApplication(page) {
+  await page.goto('.');
+  await page.getByLabel('Mot de passe').fill(process.env.PLAYWRIGHT_APP_PASSWORD || '1234');
+  await page.getByRole('button', { name: 'Se connecter' }).click();
+}
+
+module.exports = { prochainLundi, auFormatISO, ouvrirApplication, UTILISATEURS_SEED };

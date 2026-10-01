@@ -1,10 +1,10 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const { UTILISATEURS_SEED } = require('./helpers');
+const { ouvrirApplication, UTILISATEURS_SEED } = require('./helpers');
 
 test.describe('Liste des utilisateurs', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('.');
+    await ouvrirApplication(page);
   });
 
   test("affiche le titre de l'écran d'accueil", async ({ page }) => {

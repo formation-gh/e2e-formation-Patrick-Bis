@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const { prochainLundi, auFormatISO, UTILISATEURS_SEED } = require('./helpers');
+const { prochainLundi, auFormatISO, ouvrirApplication, UTILISATEURS_SEED } = require('./helpers');
 
 /**
  * Remplit le formulaire de pose de congé avec une période d'un jour ouvré (un lundi)
@@ -21,7 +21,7 @@ async function selectionnerPeriodeDUnJour(page, weeksAhead) {
 
 test.describe('Gestion des congés', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('.');
+    await ouvrirApplication(page);
     await page.locator('.user-card', { hasText: UTILISATEURS_SEED[2].nom }).click();
   });
 
