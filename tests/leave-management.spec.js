@@ -25,10 +25,10 @@ test.describe('Gestion des congés', () => {
     await page.locator('.user-card', { hasText: UTILISATEURS_SEED[2].nom }).click();
   });
 
-  scenario(test, 'poser un congé met à jour l’historique et le solde',
+  test('poser un congé met à jour l’historique et le solde', scenario(
     'Étant donné que je suis sur la fiche d’un utilisateur\nQuand je pose un congé d’un jour ouvré\nAlors l’historique et le solde sont mis à jour',
-    'Un congé est ajouté, le solde disponible passe à 24 jours et les jours pris à 1',
-    async ({ page }) => {
+    'Un congé est ajouté, le solde disponible passe à 24 jours et les jours pris à 1'
+  ), async ({ page }) => {
     await selectionnerPeriodeDUnJour(page, 0);
 
     const bouton = page.getByRole('button', { name: 'Poser le congé' });
@@ -41,10 +41,10 @@ test.describe('Gestion des congés', () => {
     await expect(page.locator('.balance-card', { hasText: 'Jours pris' })).toContainText('1');
   });
 
-  scenario(test, 'supprimer un congé le retire de l’historique et restaure le solde',
+  test('supprimer un congé le retire de l’historique et restaure le solde', scenario(
     'Étant donné qu’un congé a été posé\nQuand je supprime ce congé\nAlors il disparaît de l’historique et le solde est restauré',
-    'Aucun congé ne reste affiché et le solde disponible revient à 25 jours',
-    async ({ page }) => {
+    'Aucun congé ne reste affiché et le solde disponible revient à 25 jours'
+  ), async ({ page }) => {
     await selectionnerPeriodeDUnJour(page, 0);
     await page.getByRole('button', { name: 'Poser le congé' }).click();
     await expect(page.locator('.leave-list .leave-row')).toHaveCount(1);
@@ -56,10 +56,10 @@ test.describe('Gestion des congés', () => {
     await expect(page.locator('.balance-card', { hasText: 'Solde disponible' })).toContainText('25');
   });
 
-  scenario(test, 'refuse de poser un congé qui chevauche une période déjà posée',
+  test('refuse de poser un congé qui chevauche une période déjà posée', scenario(
     'Étant donné qu’un congé a déjà été posé sur une période\nQuand je tente de poser un congé sur la même période\nAlors l’opération est refusée et un message d’erreur apparaît',
-    'Le message de chevauchement apparaît et une seule ligne de congé reste affichée',
-    async ({ page }) => {
+    'Le message de chevauchement apparaît et une seule ligne de congé reste affichée'
+  ), async ({ page }) => {
     await selectionnerPeriodeDUnJour(page, 1);
     await page.getByRole('button', { name: 'Poser le congé' }).click();
     await expect(page.locator('.leave-list .leave-row')).toHaveCount(1);

@@ -45,13 +45,13 @@ async function ouvrirApplication(page) {
   await page.getByRole('button', { name: 'Se connecter' }).click();
 }
 
-function scenario(test, title, gherkin, expected, callback) {
-  return test(title, {
+function scenario(gherkin, expected) {
+  return {
     annotation: [
       { type: 'gherkin', description: gherkin },
       { type: 'expected', description: expected },
     ],
-  }, callback);
+  };
 }
 
 module.exports = { prochainLundi, auFormatISO, ouvrirApplication, scenario, UTILISATEURS_SEED };

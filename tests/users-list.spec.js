@@ -7,17 +7,17 @@ test.describe('Liste des utilisateurs', () => {
     await ouvrirApplication(page);
   });
 
-  scenario(test, "affiche le titre de l'écran d'accueil",
+  test("affiche le titre de l'écran d'accueil", scenario(
     'Étant donné que je suis sur la page d’accueil\nAlors le titre de la liste des utilisateurs est visible',
-    'Le titre « Les utilisateurs » est visible',
-    async ({ page }) => {
+    'Le titre « Les utilisateurs » est visible'
+  ), async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Les utilisateurs' })).toBeVisible();
   });
 
-  scenario(test, 'liste chaque utilisateur avec son nom et son email',
+  test('liste chaque utilisateur avec son nom et son email', scenario(
     'Étant donné que la liste des utilisateurs est affichée\nAlors chaque utilisateur apparaît avec son nom et son adresse e-mail',
-    'Les utilisateurs de référence sont tous affichés avec leur nom et leur e-mail',
-    async ({ page }) => {
+    'Les utilisateurs de référence sont tous affichés avec leur nom et leur e-mail'
+  ), async ({ page }) => {
     const cartes = page.locator('.user-card');
     await expect(cartes).toHaveCount(UTILISATEURS_SEED.length);
 
@@ -28,10 +28,10 @@ test.describe('Liste des utilisateurs', () => {
     }
   });
 
-  scenario(test, 'permet de naviguer vers la fiche d’un utilisateur',
+  test('permet de naviguer vers la fiche d’un utilisateur', scenario(
     'Étant donné que la liste des utilisateurs est affichée\nQuand je sélectionne un utilisateur\nAlors sa fiche est affichée',
-    'La fiche affiche le nom et l’adresse e-mail de l’utilisateur sélectionné',
-    async ({ page }) => {
+    'La fiche affiche le nom et l’adresse e-mail de l’utilisateur sélectionné'
+  ), async ({ page }) => {
     const premierUtilisateur = UTILISATEURS_SEED[0];
     await page.locator('.user-card', { hasText: premierUtilisateur.nom }).click();
 
