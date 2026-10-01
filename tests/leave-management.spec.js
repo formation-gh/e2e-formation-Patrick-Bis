@@ -56,10 +56,8 @@ test.describe('Gestion des congés', () => {
     await selectionnerPeriodeJoursOuvres(page, 26);
 
     const bouton = page.getByRole('button', { name: 'Poser le congé' });
-    await expect(bouton).toBeEnabled();
-    await bouton.click();
+    await expect(bouton).toBeDisabled();
 
-    await expect(page.locator('.error-message')).toBeVisible();
     await expect(page.locator('.leave-list .leave-row')).toHaveCount(0);
     await expect(page.getByText('Aucun congé n’a été posé pour le moment.')).toBeVisible();
     await expect(page.locator('h2:has-text("Congés posés") .count')).toHaveText('0');
