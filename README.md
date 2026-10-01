@@ -54,3 +54,5 @@ son scénario Gherkin, les valeurs attendue et obtenue, le jeu de données utili
 la preuve de test, le statut de validation et les éventuelles remarques. Les jeux
 de données peuvent être renseignés avec l’annotation `dataset` ; les pièces jointes
 du résultat Playwright sont proposées comme preuves lorsqu’elles sont disponibles.
+Une capture d’écran est prise pour chaque test, affichée dans le rapport HTML
+Playwright et liée depuis la colonne « preuve de test » du tableau récapitulatif.

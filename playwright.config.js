@@ -13,6 +13,7 @@ module.exports = defineConfig({
   reporter: [['html', { open: 'never' }], ['list'], ['./report-table-reporter.js']],
   use: {
     baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'https://aouzgaga.github.io/formation-gh-api/',
+    screenshot: 'on',
     trace: 'on-first-retry',
   },
   projects: [

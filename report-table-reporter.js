@@ -14,12 +14,19 @@ function annotation(test, type) {
   return test.annotations.find((item) => item.type === type)?.description || '';
 }
 
-function proofLinks(attachments, reportDirectory) {
-  return attachments.map((attachment) => {
+function proofLinks(attachments, reportDirectory, testId) {
+  return attachments.map((attachment, index) => {
     const name = escapeHtml(attachment.name);
     if (!attachment.path) return name;
 
-    const relativePath = path.relative(reportDirectory, attachment.path).split(path.sep).join('/');
+    const evidenceDirectory = path.join(reportDirectory, 'evidence');
+    fs.mkdirSync(evidenceDirectory, { recursive: true });
+    const safeTestId = testId.replace(/[^a-z0-9_-]/gi, '_');
+    const extension = path.extname(attachment.path) || '.attachment';
+    const fileName = `${safeTestId}-${index}${extension}`;
+    const evidencePath = path.join(evidenceDirectory, fileName);
+    fs.copyFileSync(attachment.path, evidencePath);
+    const relativePath = path.relative(reportDirectory, evidencePath).split(path.sep).join('/');
     return `<a href="${escapeHtml(encodeURI(relativePath))}">${name}</a>`;
   }).join('<br>');
 }
@@ -40,7 +47,7 @@ class ReportTableReporter {
         finalResult?.status === 'skipped' ? 'Test ignoré.' : ''
       );
       const attachments = finalResult?.attachments || [];
-      const proof = proofLinks(attachments, reportDirectory) || (
+      const proof = proofLinks(attachments, reportDirectory, test.id) || (
         passed ? 'Assertions Playwright validées' : 'Résultat consigné par Playwright'
       );
 
